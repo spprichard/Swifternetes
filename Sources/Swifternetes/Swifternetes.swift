@@ -12,7 +12,7 @@ enum Resource: String {
 }
 
 
-class Swifternetes {
+public class Swifternetes {
     public let session: URLSession
     private let decoder: JSONDecoder
     private let token: String
@@ -30,7 +30,7 @@ class Swifternetes {
     
 }
 
-extension Swifternetes {
+public extension Swifternetes {
     func GetNamespaces() -> V1NamespaceList?  {
         do {
             let response = try client.get(url: "https://kubernetes.docker.internal:6443/api/v1/namespaces").wait()
