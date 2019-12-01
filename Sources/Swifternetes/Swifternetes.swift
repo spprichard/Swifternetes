@@ -33,7 +33,10 @@ public class Swifternetes {
 public extension Swifternetes {
     func GetNamespaces() -> V1NamespaceList?  {
         do {
-            let response = try client.get(url: "https://kubernetes.docker.internal:6443/api/v1/namespaces").wait()
+            var r = try HTTPClient.Request(url: "https://kubernetes.docker.internal:6443/api/v1/namespaces", method: .GET)
+            r.headers.add(name: "Authorization", value: "Bearer \(self.token)")
+            
+            let response = try client.execute(request: r).wait()
             guard var buf = response.body else { return nil }
             guard let str = buf.readString(length: buf.readableBytes) else { return nil }
             guard let data = str.data(using: .utf8) else { return nil }
